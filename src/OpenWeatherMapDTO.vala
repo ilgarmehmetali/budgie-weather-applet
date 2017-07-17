@@ -134,6 +134,13 @@ public class OpenWeatherMapDTO {
 			this.message = root_obj.get_string_member("message");
 		}
 
+		//todo make some debug flags and surrond this...
+		Json.Generator generator = new Json.Generator ();
+		generator.set_root (node);
+
+		string str = generator.to_data (null);
+		print(str);
+
 	}
 
 	public string linuxIcon(){
