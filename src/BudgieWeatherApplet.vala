@@ -61,7 +61,7 @@ public class Applet : Budgie.Applet
         box.pack_start (this.city_name, false, false, 0);
         this.add (box);
 
-        this.reset_update_timer();
+        this.reset_update_timer(true);
 
         this.on_settings_change("show-icon");
         this.on_settings_change("show-city-name");
@@ -89,7 +89,7 @@ public class Applet : Budgie.Applet
         } else if (key == "latitude") {
             // update weather data
         } else if (key == "update-interval") {
-            this.reset_update_timer();
+            this.reset_update_timer(false);
         } else if (key == "show-icon") {
             if(this.settings.get_boolean("show-icon")) {
                 this.weather_icon.show();
@@ -110,14 +110,16 @@ public class Applet : Budgie.Applet
             }
         } else if (key == "update-now") {
             if(this.settings.get_boolean("update-now")) {
-                this.settings.set_int64("last-update", 0);
-                this.reset_update_timer();
+                this.reset_update_timer(true);
             }
         }
         queue_resize();
     }
 
-    void reset_update_timer(){
+    void reset_update_timer(bool force_update){
+        if(force_update){
+            this.settings.set_int64("last-update", 0);
+        }
         if (this.source_id > 0) {
             Source.remove(this.source_id);
         }
