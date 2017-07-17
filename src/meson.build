@@ -30,6 +30,7 @@ applet_budgie_weather_deps = [
     dep_peas,
     dep_budgie,
     dep_json_glib,
+    dep_libsoup,
 ]
 
 shared_library(
