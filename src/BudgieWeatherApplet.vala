@@ -61,10 +61,7 @@ public class Applet : Budgie.Applet
         box.pack_start (this.city_name, false, false, 0);
         this.add (box);
 
-        uint interval = this.settings.get_int("update-interval");
-        if(interval > 0){
-            this.source_id = GLib.Timeout.add_full(GLib.Priority.DEFAULT, interval, update);
-        }
+        this.reset_update_timer();
 
         this.on_settings_change("show-icon");
         this.on_settings_change("show-city-name");
@@ -85,14 +82,7 @@ public class Applet : Budgie.Applet
         } else if (key == "latitude") {
             // update weather data
         } else if (key == "update-interval") {
-            if (this.source_id > 0) {
-                Source.remove(this.source_id);
-
-                uint interval = this.settings.get_int("update-interval");
-                if(interval > 0){
-                    this.source_id = GLib.Timeout.add_full(GLib.Priority.DEFAULT, interval, update);
-                }
-            }
+            this.reset_update_timer();
         } else if (key == "show-icon") {
             if(this.settings.get_boolean("show-icon")) {
                 this.weather_icon.show();
@@ -117,6 +107,16 @@ public class Applet : Budgie.Applet
             }
         }
         queue_resize();
+    }
+
+    void reset_update_timer(){
+        if (this.source_id > 0) {
+            Source.remove(this.source_id);
+        }
+        uint interval = this.settings.get_int("update-interval");
+        if(interval > 0){
+            this.source_id = GLib.Timeout.add_full(GLib.Priority.DEFAULT, interval, update);
+        }
     }
 
     public override bool supports_settings() {
