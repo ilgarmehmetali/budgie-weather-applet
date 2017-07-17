@@ -46,7 +46,7 @@ public class Applet : Budgie.Applet
         this.settings = this.get_applet_settings(uuid);
         this.settings.changed.connect(on_settings_change);
 
-        this.weather_icon = new Gtk.Image.from_icon_name ("weather-overcast", Gtk.IconSize.MENU);
+        this.weather_icon = new Gtk.Image ();
 
         this.city_name = new Gtk.Label ("-");
         this.city_name.set_ellipsize (Pango.EllipsizeMode.END);
@@ -78,13 +78,17 @@ public class Applet : Budgie.Applet
         if(last_update.compare(now) <= 0) {
             this.settings.set_int64("last-update", now.to_unix());
             OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
+
             this.city_name.label = obj.name;
+
             string symbol = "";
             string unit = this.settings.get_string("units-format");
             if (unit == "metric") symbol = "C";
             else if (unit == "imperial") symbol = "F";
             else if (unit == "standard") symbol = "K";
             this.temp.label = "%s°%s".printf(obj.main.temp.to_string(), symbol);
+
+            this.weather_icon.set_from_icon_name(obj.linuxIcon(), Gtk.IconSize.MENU);
         }
         return true;
     }
