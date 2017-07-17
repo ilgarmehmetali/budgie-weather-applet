@@ -114,6 +114,45 @@ public class OpenWeatherMapDTO {
 			print ("Unable to parse the string: %s".printf(e.message));
 		}
     }
+
+	public string linuxIcon(){
+		return openweatermapIconToLinuxIcon(this.weather.icon);
+	}
+
+	string openweatermapIconToLinuxIcon(string openweatermapIcon){
+		switch (openweatermapIcon) {
+			case "01d":
+				return "weather-clear-symbolic";
+			case "01n":
+				return "weather-clear-night-symbolic";
+			case "02d":
+				return "weather-few-clouds-symbolic";
+			case "02n":
+				return "weather-few-clouds-night-symbolic";
+			case "03n":
+			case "03d":
+				return "weather-overcast-symbolic";
+			case "04d":
+			case "04n":
+				return "weather-overcast-symbolic";
+			case "09d":
+			case "09n":
+				return "weather-showers-symbolic";
+			case "10d":
+			case "10n":
+				return "weather-showers-scattered-symbolic";
+			case "11d":
+			case "11n":
+				return "weather-storm-symbolic";
+			case "13d":
+			case "13n":
+				return "weather-snow-symbolic";
+			case "50d":
+			case "50n":
+				return "weather-fog-symbolic";
+		}
+		return "weather-overcast-symbolic";
+	}
 }
 
 void print(string message){
