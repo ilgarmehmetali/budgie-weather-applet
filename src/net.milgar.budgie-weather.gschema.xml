@@ -36,5 +36,15 @@
       <summary>Update Data Now</summary>
       <description>Whether to Update Data Now</description>
     </key>
+    <key type="i" name="update-interval">
+      <default>30</default>
+      <summary>Update Interval</summary>
+      <description>How many minutes to wait before updating data</description>
+    </key>
+    <key type="i" name="last-update">
+      <default>0</default>
+      <summary>Last Update Timestamp</summary>
+      <description>Timestamp for last update</description>
+    </key>
   </schema>
 </schemalist>
