@@ -32,11 +32,22 @@ public class Applet : Budgie.Applet
 
     public string uuid { public set; public get; }
 
+    private uint source_id;
+
     private Settings? settings;
 
     public Applet(string uuid)
     {
         Object(uuid: uuid);
+
+        settings_schema = "net.milgar.budgie-weather";
+        settings_prefix = "/net/milgar/budgie-weather";
+
+        this.settings = this.get_applet_settings(uuid);
+        this.settings.changed.connect(on_settings_change);
+        this.on_settings_change("show-icon");
+        this.on_settings_change("show-city-name");
+        this.on_settings_change("show-temp");
 
         this.weather_icon = new Gtk.Image.from_icon_name ("weather-overcast", Gtk.IconSize.MENU);
 
@@ -57,16 +68,11 @@ public class Applet : Budgie.Applet
 		OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
 		assert (obj != null);
 
-        GLib.Timeout.add_full(GLib.Priority.DEFAULT, 5000, update);
-
-        settings_schema = "net.milgar.budgie-weather";
-        settings_prefix = "/net/milgar/budgie-weather";
-
-        this.settings = this.get_applet_settings(uuid);
-        this.settings.changed.connect(on_settings_change);
-        this.on_settings_change("show-icon");
-        this.on_settings_change("show-city-name");
-        this.on_settings_change("show-temp");
+        uint interval = this.settings.get_int("update-interval");
+        if(interval > 0){
+            this.source_id = GLib.Timeout.add_full(GLib.Priority.DEFAULT, interval, update);
+        }
+        
         show_all();
     }
 
@@ -80,7 +86,14 @@ public class Applet : Budgie.Applet
         } else if (key == "latitude") {
             // update weather data
         } else if (key == "update-interval") {
-            // update weather data
+            if (this.source_id > 0) {
+                Source.remove(this.source_id);
+
+                uint interval = this.settings.get_int("update-interval");
+                if(interval > 0){
+                    this.source_id = GLib.Timeout.add_full(GLib.Priority.DEFAULT, interval, update);
+                }
+            }
         } else if (key == "show-icon") {
             if(this.settings.get_boolean("show-icon")) {
                 this.weather_icon.show();
