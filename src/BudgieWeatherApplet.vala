@@ -71,8 +71,14 @@ public class Applet : Budgie.Applet
     }
 
     bool update(){
-        OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
-        assert (obj != null);
+        DateTime last_update = new DateTime.from_unix_utc(this.settings.get_int64("last-update"));
+        DateTime now = new DateTime.now_utc();
+        last_update = last_update.add_minutes(this.settings.get_int("update-interval"));
+
+        if(last_update.compare(now) <= 0) {
+            OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
+            
+        }
         return true;
     }
 
@@ -103,7 +109,8 @@ public class Applet : Budgie.Applet
             }
         } else if (key == "update-now") {
             if(this.settings.get_boolean("update-now")) {
-                this.city_name.label += "-";
+                this.settings.set_int64("last-update", 0)
+                this.reset_update_timer();
             }
         }
         queue_resize();
