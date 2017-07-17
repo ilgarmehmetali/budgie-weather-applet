@@ -79,7 +79,9 @@ public class Applet : Budgie.Applet
 
         if(last_update.compare(now) <= 0) {
             this.settings.set_int64("last-update", now.to_unix());
-            OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
+            GLib.InputStream input_stream = new GLib.MemoryInputStream.from_data (openweaethermap_test_data.data, GLib.g_free);
+            //OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
+            OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_stream(input_stream);
 
             this.city_name.label = obj.name;
 

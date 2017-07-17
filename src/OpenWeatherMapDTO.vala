@@ -61,59 +61,71 @@ public class OpenWeatherMapDTO {
 	public string name {get;set;}
 
     public OpenWeatherMapDTO.from_json_string (string json_string) {
-
-
 		Json.Parser parser = new Json.Parser ();
 		try {
 			parser.load_from_data (json_string);
-			Json.Node node = parser.get_root ();
-			Json.Object root_obj = node.get_object();
-
-			if(root_obj.has_member("coord")){
-				this.coord = Json.gobject_deserialize (typeof (Coord), root_obj.get_member("coord")) as Coord;
-			}
-			if(root_obj.has_member("weather")){
-				Json.Array weather_array = root_obj.get_member("weather").get_array();
-				if(weather_array.get_length() > 0)
-					this.weather = Json.gobject_deserialize (typeof (Weather), weather_array.get_element(0)) as Weather;
-			}
-			if(root_obj.has_member("main")){
-				this.main = Json.gobject_deserialize (typeof (Main), root_obj.get_member("main")) as Main;
-			}
-			if(root_obj.has_member("wind")){
-				this.wind = Json.gobject_deserialize (typeof (Wind), root_obj.get_member("wind")) as Wind;
-			}
-			if(root_obj.has_member("clouds")){
-				this.clouds = Json.gobject_deserialize (typeof (Clouds), root_obj.get_member("clouds")) as Clouds;
-			}
-			if(root_obj.has_member("rain")){
-				this.rain = Json.gobject_deserialize (typeof (Rain), root_obj.get_member("rain")) as Rain;
-			}
-			if(root_obj.has_member("snow")){
-				this.snow = Json.gobject_deserialize (typeof (Snow), root_obj.get_member("snow")) as Snow;
-			}
-			if(root_obj.has_member("dt")){
-				this.dt = new DateTime.from_unix_utc(root_obj.get_int_member("dt"));
-			}
-			if(root_obj.has_member("sys")){
-				Json.Object sys_object = root_obj.get_object_member("sys");
-				this.sys = new Sys();
-				if(sys_object.has_member("sunrise"))
-					this.sys.sunrise = new DateTime.from_unix_utc(sys_object.get_int_member("sunrise"));
-				if(sys_object.has_member("sunset"))
-					this.sys.sunset = new DateTime.from_unix_utc(sys_object.get_int_member("sunset"));
-
-			}
-			if(root_obj.has_member("id")){
-				this.id = root_obj.get_int_member("id");
-			}
-			if(root_obj.has_member("name")){
-				this.name = root_obj.get_string_member("name");
-			}
+			parse_json(parser);
 		} catch (Error e) {
 			print ("Unable to parse the string: %s".printf(e.message));
 		}
     }
+
+    public OpenWeatherMapDTO.from_json_stream (InputStream json_stream) {
+		Json.Parser parser = new Json.Parser ();
+		try {
+			parser.load_from_stream (json_stream);
+			parse_json(parser);
+		} catch (Error e) {
+			print ("Unable to parse the string: %s".printf(e.message));
+		}
+    }
+
+	void parse_json(Json.Parser parser){
+		Json.Node node = parser.get_root ();
+		Json.Object root_obj = node.get_object();
+
+		if(root_obj.has_member("coord")){
+			this.coord = Json.gobject_deserialize (typeof (Coord), root_obj.get_member("coord")) as Coord;
+		}
+		if(root_obj.has_member("weather")){
+			Json.Array weather_array = root_obj.get_member("weather").get_array();
+			if(weather_array.get_length() > 0)
+			this.weather = Json.gobject_deserialize (typeof (Weather), weather_array.get_element(0)) as Weather;
+		}
+		if(root_obj.has_member("main")){
+			this.main = Json.gobject_deserialize (typeof (Main), root_obj.get_member("main")) as Main;
+		}
+		if(root_obj.has_member("wind")){
+			this.wind = Json.gobject_deserialize (typeof (Wind), root_obj.get_member("wind")) as Wind;
+		}
+		if(root_obj.has_member("clouds")){
+			this.clouds = Json.gobject_deserialize (typeof (Clouds), root_obj.get_member("clouds")) as Clouds;
+		}
+		if(root_obj.has_member("rain")){
+			this.rain = Json.gobject_deserialize (typeof (Rain), root_obj.get_member("rain")) as Rain;
+		}
+		if(root_obj.has_member("snow")){
+			this.snow = Json.gobject_deserialize (typeof (Snow), root_obj.get_member("snow")) as Snow;
+		}
+		if(root_obj.has_member("dt")){
+			this.dt = new DateTime.from_unix_utc(root_obj.get_int_member("dt"));
+		}
+		if(root_obj.has_member("sys")){
+			Json.Object sys_object = root_obj.get_object_member("sys");
+			this.sys = new Sys();
+			if(sys_object.has_member("sunrise"))
+			this.sys.sunrise = new DateTime.from_unix_utc(sys_object.get_int_member("sunrise"));
+			if(sys_object.has_member("sunset"))
+			this.sys.sunset = new DateTime.from_unix_utc(sys_object.get_int_member("sunset"));
+
+		}
+		if(root_obj.has_member("id")){
+			this.id = root_obj.get_int_member("id");
+		}
+		if(root_obj.has_member("name")){
+			this.name = root_obj.get_string_member("name");
+		}
+	}
 
 	public string linuxIcon(){
 		return openweatermapIconToLinuxIcon(this.weather.icon);
