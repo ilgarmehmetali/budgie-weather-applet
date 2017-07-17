@@ -90,7 +90,7 @@ public class Applet : Budgie.Applet
             else if (unit == "standard") symbol = "K";
             this.temp.label = "%s°%s".printf(obj.main.temp.to_string(), symbol);
 
-            this.weather_icon.set_from_icon_name(obj.linuxIcon(), Gtk.IconSize.MENU);
+            this.weather_icon.set_from_icon_name(obj.linuxIcon(), Gtk.IconSize.LARGE_TOOLBAR);
         }
         return true;
     }
