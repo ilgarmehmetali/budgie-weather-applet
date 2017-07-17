@@ -20,6 +20,7 @@ applet_budgie_weather_resources = gnome.compile_resources(
 
 applet_budgie_weather_sources = [
     'BudgieWeatherApplet.vala',
+    'OpenWeatherMapDTO.vala',
     applet_budgie_weather_resources,
 ]
 
@@ -28,6 +29,7 @@ applet_budgie_weather_deps = [
     dep_glib,
     dep_peas,
     dep_budgie,
+    dep_json_glib,
 ]
 
 shared_library(
