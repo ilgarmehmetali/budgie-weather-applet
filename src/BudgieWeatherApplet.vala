@@ -78,7 +78,13 @@ public class Applet : Budgie.Applet
         if(last_update.compare(now) <= 0) {
             this.settings.set_int64("last-update", now.to_unix());
             OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
-
+            this.city_name.label = obj.name;
+            string symbol = "";
+            string unit = this.settings.get_string("units-format");
+            if (unit == "metric") symbol = "C";
+            else if (unit == "imperial") symbol = "F";
+            else if (unit == "standard") symbol = "K";
+            this.temp.label = "%s°%s".printf(obj.main.temp.to_string(), symbol);
         }
         return true;
     }
