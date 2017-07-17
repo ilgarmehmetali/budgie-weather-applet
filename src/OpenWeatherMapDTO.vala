@@ -27,7 +27,7 @@ public class OpenWeatherMapDTO {
 
 	public class Wind : Object {
 		public float speed {get;set;}
-		public int deg {get;set;}
+		public float deg {get;set;}
 	}
 
 	public class Clouds : Object {
@@ -59,6 +59,8 @@ public class OpenWeatherMapDTO {
 	public Sys sys {get;set;}
 	public int64 id {get;set;}
 	public string name {get;set;}
+	public string cod {get;set;}
+	public string message {get;set;}
 
     public OpenWeatherMapDTO.from_json_string (string json_string) {
 		Json.Parser parser = new Json.Parser ();
@@ -125,6 +127,13 @@ public class OpenWeatherMapDTO {
 		if(root_obj.has_member("name")){
 			this.name = root_obj.get_string_member("name");
 		}
+		if(root_obj.has_member("cod")){
+			this.cod = root_obj.get_string_member("cod");
+		}
+		if(root_obj.has_member("message")){
+			this.message = root_obj.get_string_member("message");
+		}
+
 	}
 
 	public string linuxIcon(){
