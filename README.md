@@ -1,5 +1,5 @@
 # Budgie Weather
-
+A weather applet for Budgie Desktop. OpenWeatherMap is used for getting weather data.  
 
 ---
 
