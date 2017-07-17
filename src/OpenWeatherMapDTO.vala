@@ -62,7 +62,10 @@ public class OpenWeatherMapDTO {
 	public string cod {get;set;}
 	public string message {get;set;}
 
+	private string json_string;
+
     public OpenWeatherMapDTO.from_json_string (string json_string) {
+		this.json_string = json_string;
 		Json.Parser parser = new Json.Parser ();
 		try {
 			parser.load_from_data (json_string);
@@ -128,19 +131,26 @@ public class OpenWeatherMapDTO {
 			this.name = root_obj.get_string_member("name");
 		}
 		if(root_obj.has_member("cod")){
-			this.cod = root_obj.get_string_member("cod");
+			if(root_obj.get_member("cod").type_name() == "Integer")
+				this.cod = root_obj.get_int_member("cod").to_string();
+			else
+				this.cod = root_obj.get_string_member("cod");
 		}
 		if(root_obj.has_member("message")){
 			this.message = root_obj.get_string_member("message");
 		}
 
+
 		//todo make some debug flags and surrond this...
 		Json.Generator generator = new Json.Generator ();
 		generator.set_root (node);
 
-		string str = generator.to_data (null);
-		print(str);
+		this.json_string = generator.to_data (null);
+	}
 
+	public void printJson(){
+		print("OpenWeatherMapDTO Json data;");
+		print("\n" + this.json_string);
 	}
 
 	public string linuxIcon(){
@@ -183,7 +193,8 @@ public class OpenWeatherMapDTO {
 	}
 }
 
-void print(string message){
+void print(string? message){
+	if (message == null) message = "";
 	stdout.printf ("Budgie-Weather: %s\n", message);
 }
 
