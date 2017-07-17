@@ -46,5 +46,10 @@
       <summary>Last Update Timestamp</summary>
       <description>Timestamp for last update</description>
     </key>
+    <key type="s" name="units-format">
+      <default>"metric"</default>
+      <summary>Temperature units format</summary>
+      <description>Temperature units format</description>
+    </key>
   </schema>
 </schemalist>

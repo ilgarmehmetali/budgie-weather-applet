@@ -64,19 +64,17 @@ public class Applet : Budgie.Applet
         box.pack_start (this.city_name, false, false, 0);
         this.add (box);
 
-
-		OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
-		assert (obj != null);
-
         uint interval = this.settings.get_int("update-interval");
         if(interval > 0){
             this.source_id = GLib.Timeout.add_full(GLib.Priority.DEFAULT, interval, update);
         }
-        
+
         show_all();
     }
 
     bool update(){
+        OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
+        assert (obj != null);
         return true;
     }
 
@@ -157,6 +155,9 @@ public class AppletSettings : Gtk.Grid
     private Gtk.Button? button_update_now;
 
     [GtkChild]
+    private Gtk.ComboBox? combobox_units_format;
+
+    [GtkChild]
     private Gtk.Entry? textentry_openweathermap_api_key;
 
     public AppletSettings(Settings? settings)
@@ -170,6 +171,7 @@ public class AppletSettings : Gtk.Grid
         this.settings.bind("show-icon", switch_icon, "active", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-city-name", switch_city_name, "active", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-temp", switch_temp, "active", SettingsBindFlags.DEFAULT);
+        this.settings.bind("units-format", combobox_units_format, "active_id", SettingsBindFlags.DEFAULT);
 
         this.button_update_now.clicked.connect (() => {
             this.settings.set_boolean("update-now", true);
