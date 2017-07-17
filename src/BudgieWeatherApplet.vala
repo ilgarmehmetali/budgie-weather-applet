@@ -45,9 +45,6 @@ public class Applet : Budgie.Applet
 
         this.settings = this.get_applet_settings(uuid);
         this.settings.changed.connect(on_settings_change);
-        this.on_settings_change("show-icon");
-        this.on_settings_change("show-city-name");
-        this.on_settings_change("show-temp");
 
         this.weather_icon = new Gtk.Image.from_icon_name ("weather-overcast", Gtk.IconSize.MENU);
 
@@ -68,6 +65,10 @@ public class Applet : Budgie.Applet
         if(interval > 0){
             this.source_id = GLib.Timeout.add_full(GLib.Priority.DEFAULT, interval, update);
         }
+
+        this.on_settings_change("show-icon");
+        this.on_settings_change("show-city-name");
+        this.on_settings_change("show-temp");
 
         show_all();
     }
