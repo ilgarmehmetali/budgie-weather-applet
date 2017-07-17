@@ -236,7 +236,7 @@ API Key</property>
       </packing>
     </child>
     <child>
-      <object class="GtkSpinButton">
+      <object class="GtkSpinButton" id="spinbutton_update_interval">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="halign">end</property>
