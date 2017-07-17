@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="net.milgar.budgie-weather">
+    <key type="d" name="longitude">
+      <default>0</default>
+      <summary>Longitude</summary>
+      <description>Longitude</description>
+    </key>
+    <key type="d" name="latitude">
+      <default>0</default>
+      <summary>Latitude</summary>
+      <description>Latitude</description>
+    </key>
+    <key type="s" name="openweathermap-api-key">
+      <default>""</default>
+      <summary>OpenWeatherMap API Key</summary>
+      <description>OpenWeatherMap API Key</description>
+    </key>
+    <key type="b" name="show-icon">
+      <default>true</default>
+      <summary>Show Icon</summary>
+      <description>Whether to show icon about weather</description>
+    </key>
+    <key type="b" name="show-city-name">
+      <default>true</default>
+      <summary>Show City Name</summary>
+      <description>Whether to show city name</description>
+    </key>
+    <key type="b" name="show-temp">
+      <default>true</default>
+      <summary>Show Temperature</summary>
+      <description>Whether to show temperature</description>
+    </key>
+    <key type="b" name="update-now">
+      <default>false</default>
+      <summary>Update Data Now</summary>
+      <description>Whether to Update Data Now</description>
+    </key>
+  </schema>
+</schemalist>
