@@ -66,6 +66,7 @@ public class Applet : Budgie.Applet
         this.settings.changed.connect(on_settings_change);
         this.on_settings_change("longitude");
         this.on_settings_change("latitude");
+        this.on_settings_change("update-interval");
         this.on_settings_change("show-icon");
         this.on_settings_change("show-city-name");
         this.on_settings_change("show-temp");
@@ -80,6 +81,8 @@ public class Applet : Budgie.Applet
         if (key == "longitude") {
             // update weather data
         } else if (key == "latitude") {
+            // update weather data
+        } else if (key == "update-interval") {
             // update weather data
         } else if (key == "show-icon") {
             if(this.settings.get_boolean("show-icon")) {
@@ -129,6 +132,9 @@ public class AppletSettings : Gtk.Grid
     private Gtk.SpinButton? spinbutton_latitude;
 
     [GtkChild]
+    private Gtk.SpinButton? spinbutton_update_interval;
+
+    [GtkChild]
     private Gtk.Switch? switch_icon;
 
     [GtkChild]
@@ -149,6 +155,7 @@ public class AppletSettings : Gtk.Grid
 
         this.settings.bind("longitude", spinbutton_longitude, "value", SettingsBindFlags.DEFAULT);
         this.settings.bind("latitude", spinbutton_latitude, "value", SettingsBindFlags.DEFAULT);
+        this.settings.bind("update-interval", spinbutton_update_interval, "value", SettingsBindFlags.DEFAULT);
         this.settings.bind("openweathermap-api-key", textentry_openweathermap_api_key, "text", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-icon", switch_icon, "active", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-city-name", switch_city_name, "active", SettingsBindFlags.DEFAULT);
