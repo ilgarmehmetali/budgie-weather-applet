@@ -64,9 +64,6 @@ public class Applet : Budgie.Applet
 
         this.settings = this.get_applet_settings(uuid);
         this.settings.changed.connect(on_settings_change);
-        this.on_settings_change("longitude");
-        this.on_settings_change("latitude");
-        this.on_settings_change("update-interval");
         this.on_settings_change("show-icon");
         this.on_settings_change("show-city-name");
         this.on_settings_change("show-temp");
