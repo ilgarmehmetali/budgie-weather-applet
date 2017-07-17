@@ -96,11 +96,7 @@ public class Applet : Budgie.Applet
     }
 
     void on_settings_change(string key) {
-        if (key == "longitude") {
-            // update weather data
-        } else if (key == "latitude") {
-            // update weather data
-        } else if (key == "update-interval") {
+        if (key == "update-interval") {
             this.reset_update_timer(false);
         } else if (key == "show-icon") {
             if(this.settings.get_boolean("show-icon")) {
