@@ -41,7 +41,7 @@
       <summary>Update Interval</summary>
       <description>How many minutes to wait before updating data</description>
     </key>
-    <key type="i" name="last-update">
+    <key type="x" name="last-update">
       <default>0</default>
       <summary>Last Update Timestamp</summary>
       <description>Timestamp for last update</description>

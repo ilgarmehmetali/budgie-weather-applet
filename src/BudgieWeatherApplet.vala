@@ -76,8 +76,9 @@ public class Applet : Budgie.Applet
         last_update = last_update.add_minutes(this.settings.get_int("update-interval"));
 
         if(last_update.compare(now) <= 0) {
+            this.settings.set_int64("last-update", now.to_unix());
             OpenWeatherMapDTO obj = new OpenWeatherMapDTO.from_json_string(openweaethermap_test_data);
-            
+
         }
         return true;
     }
@@ -109,7 +110,7 @@ public class Applet : Budgie.Applet
             }
         } else if (key == "update-now") {
             if(this.settings.get_boolean("update-now")) {
-                this.settings.set_int64("last-update", 0)
+                this.settings.set_int64("last-update", 0);
                 this.reset_update_timer();
             }
         }
