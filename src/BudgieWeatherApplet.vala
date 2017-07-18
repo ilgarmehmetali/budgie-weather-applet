@@ -115,23 +115,11 @@ public class Applet : Budgie.Applet
         if (key == "update-interval") {
             this.reset_update_timer(false);
         } else if (key == "show-icon") {
-            if(this.settings.get_boolean("show-icon")) {
-                this.weather_icon.show();
-            } else {
-                this.weather_icon.hide();
-            }
+            this.weather_icon.set_visible(this.settings.get_boolean("show-icon"));
         } else if (key == "show-city-name") {
-            if(this.settings.get_boolean("show-city-name")) {
-                this.city_name.show();
-            } else {
-                this.city_name.hide();
-            }
+            this.city_name.set_visible(this.settings.get_boolean("show-city-name"));
         } else if (key == "show-temp") {
-            if(this.settings.get_boolean("show-temp")) {
-                this.temp.show();
-            } else {
-                this.temp.hide();
-            }
+            this.temp.set_visible(this.settings.get_boolean("show-temp"));
         } else if (key == "update-now") {
             if(this.settings.get_boolean("update-now")) {
                 this.reset_update_timer(true);
