@@ -86,7 +86,7 @@ public class Applet : Budgie.Applet
                         InputStream stream = request.send_async.end (res);
                         OpenWeatherMapDTO openWeatherMapDTO = new OpenWeatherMapDTO.from_json_stream(stream);
 
-                        if(openWeatherMapDTO.cod == 200) {
+                        if(openWeatherMapDTO.cod == "200") {
                             this.city_name.label = openWeatherMapDTO.name;
 
                             string symbol = "";
@@ -97,7 +97,8 @@ public class Applet : Budgie.Applet
 
                             this.weather_icon.set_from_icon_name(openWeatherMapDTO.linuxIcon(), Gtk.IconSize.LARGE_TOOLBAR);
                         } else {
-                            print(openWeatherMapDTO.message + openWeatherMapDTO.cod.to_string());
+                            openWeatherMapDTO.printJson();
+                            print(openWeatherMapDTO.coord.lat.to_string());
                         }
                     } catch (Error e) {
                         print ("Error at update func: %s".printf(e.message));
