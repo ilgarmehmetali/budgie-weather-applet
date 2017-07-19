@@ -84,21 +84,21 @@ public class Applet : Budgie.Applet
                 request.send_async.begin (null, (obj, res) => {
                     try {
                         InputStream stream = request.send_async.end (res);
-                        OpenWeatherMapDTO openWeatherMapDTO = new OpenWeatherMapDTO.from_json_stream(stream);
+                        Providers.OpenWeatherMap openWeatherMap = new Providers.OpenWeatherMap.from_json_stream(stream);
 
-                        if(openWeatherMapDTO.cod == "200") {
-                            this.city_name.label = openWeatherMapDTO.name;
+                        if(openWeatherMap.cod == "200") {
+                            this.city_name.label = openWeatherMap.name;
 
                             string symbol = "";
                             if (unit == "metric") symbol = "C";
                             else if (unit == "imperial") symbol = "F";
                             else if (unit == "standard") symbol = "K";
-                            this.temp.label = "%s°%s".printf(openWeatherMapDTO.main.temp.to_string(), symbol);
+                            this.temp.label = "%s°%s".printf(openWeatherMap.main.temp.to_string(), symbol);
 
-                            this.weather_icon.set_from_icon_name(openWeatherMapDTO.linuxIcon(), Gtk.IconSize.LARGE_TOOLBAR);
+                            this.weather_icon.set_from_icon_name(openWeatherMap.linuxIcon(), Gtk.IconSize.LARGE_TOOLBAR);
                         } else {
-                            openWeatherMapDTO.printJson();
-                            print(openWeatherMapDTO.coord.lat.to_string());
+                            openWeatherMap.printJson();
+                            print(openWeatherMap.coord.lat.to_string());
                         }
                     } catch (Error e) {
                         print ("Error at update func: %s".printf(e.message));

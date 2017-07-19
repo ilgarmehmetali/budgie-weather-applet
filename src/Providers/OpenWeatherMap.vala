@@ -1,7 +1,7 @@
 
-namespace Weather {
+namespace Weather.Providers {
 
-public class OpenWeatherMapDTO {
+public class OpenWeatherMap {
 
     public class Coord : Object {
 		public float lon {get;set;}
@@ -64,7 +64,7 @@ public class OpenWeatherMapDTO {
 
 	private string json_string;
 
-    public OpenWeatherMapDTO.from_json_string (string json_string) {
+    public OpenWeatherMap.from_json_string (string json_string) {
 		this.json_string = json_string;
 		Json.Parser parser = new Json.Parser ();
 		try {
@@ -75,7 +75,7 @@ public class OpenWeatherMapDTO {
 		}
     }
 
-    public OpenWeatherMapDTO.from_json_stream (InputStream json_stream) {
+    public OpenWeatherMap.from_json_stream (InputStream json_stream) {
 		Json.Parser parser = new Json.Parser ();
 		try {
 			parser.load_from_stream (json_stream);
