@@ -85,20 +85,20 @@ public class Applet : Budgie.Applet
                     try {
                         InputStream stream = request.send_async.end (res);
                         Providers.OpenWeatherMap openWeatherMap = new Providers.OpenWeatherMap.from_json_stream(stream);
+                        WeatherInfo info = openWeatherMap.get_weather_info();
 
                         if(openWeatherMap.cod == "200") {
-                            this.city_name.label = openWeatherMap.name;
+                            this.city_name.label = info.city_name;
 
                             string symbol = "";
                             if (unit == "metric") symbol = "C";
                             else if (unit == "imperial") symbol = "F";
                             else if (unit == "standard") symbol = "K";
-                            this.temp.label = "%s°%s".printf(openWeatherMap.main.temp.to_string(), symbol);
+                            this.temp.label = "%s°%s".printf(info.temp.to_string(), symbol);
 
-                            this.weather_icon.set_from_icon_name(openWeatherMap.linuxIcon(), Gtk.IconSize.LARGE_TOOLBAR);
+                            this.weather_icon.set_from_icon_name(info.symbolic_icon_name, Gtk.IconSize.LARGE_TOOLBAR);
                         } else {
                             openWeatherMap.printJson();
-                            print(openWeatherMap.coord.lat.to_string());
                         }
                     } catch (Error e) {
                         print ("Error at update func: %s".printf(e.message));
