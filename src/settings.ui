@@ -2,6 +2,7 @@
 <!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.18"/>
+  <requires lib="libgweather" version="3.0"/>
   <object class="GtkAdjustment" id="adjustment_interval">
     <property name="lower">10</property>
     <property name="upper">1000</property>
@@ -235,18 +236,6 @@
             <property name="no_show_all">True</property>
             <property name="column_homogeneous">True</property>
             <child>
-              <object class="GtkEntry" id="entry_location">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="completion">entrycompletion1</property>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
-                <property name="width">2</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -258,6 +247,26 @@
                 <property name="top_attach">0</property>
                 <property name="width">2</property>
               </packing>
+            </child>
+            <child>
+              <object class="GWeatherLocationEntry" id="gweather_location_entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="primary_icon_name">edit-find-symbolic</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
         </child>

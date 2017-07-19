@@ -63,6 +63,9 @@ public class Applet : Budgie.Applet
         this.on_settings_change("show-temp");
 
         show_all();
+
+        // to solve template giving "Invalid object type 'GWeatherLocationEntry'" error"
+        new GWeather.LocationEntry(null);
     }
 
     bool update(){
@@ -190,7 +193,7 @@ public class AppletSettings : Gtk.Grid
     private Gtk.Entry? textentry_openweathermap_api_key;
 
     [GtkChild]
-    private Gtk.Entry? entry_location;
+    private GWeather.LocationEntry? gweather_location_entry;
 
     public AppletSettings(Settings? settings)
     {

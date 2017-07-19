@@ -39,6 +39,9 @@ shared_library(
     'budgieweatherapplet',
     applet_budgie_weather_sources,
     dependencies: applet_budgie_weather_deps,
+    c_args: [
+        '-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE',
+    ],
     install: true,
     install_dir: LIB_INSTALL_DIR,
 )
