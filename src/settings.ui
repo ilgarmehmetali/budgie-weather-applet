@@ -19,6 +19,7 @@
     <property name="step_increment">0.01</property>
     <property name="page_increment">2.2351741811588166e-10</property>
   </object>
+  <object class="GtkEntryCompletion" id="entrycompletion1"/>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name key -->
@@ -41,6 +42,24 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="liststore_providers">
+    <columns>
+      <!-- column-name index -->
+      <column type="gint"/>
+      <!-- column-name provider_name -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0">0</col>
+        <col id="1" translatable="yes">GWeather</col>
+      </row>
+      <row>
+        <col id="0">1</col>
+        <col id="1" translatable="yes">OpenWeatherMap</col>
+      </row>
+    </data>
+  </object>
   <template class="WeatherAppletSettings" parent="GtkGrid">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -55,37 +74,13 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="halign">start</property>
-        <property name="label" translatable="yes">Longitude</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">start</property>
-        <property name="label" translatable="yes">Latitude</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">1</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">start</property>
         <property name="label" translatable="yes">Show Icon</property>
         <property name="wrap">True</property>
         <property name="xalign">0</property>
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">4</property>
+        <property name="top_attach">7</property>
       </packing>
     </child>
     <child>
@@ -99,7 +94,7 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">5</property>
+        <property name="top_attach">8</property>
       </packing>
     </child>
     <child>
@@ -111,7 +106,7 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">5</property>
+        <property name="top_attach">8</property>
       </packing>
     </child>
     <child>
@@ -123,43 +118,7 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">4</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkSpinButton" id="spinbutton_latitude">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="halign">end</property>
-        <property name="valign">start</property>
-        <property name="width_chars">6</property>
-        <property name="input_purpose">number</property>
-        <property name="adjustment">adjustment_lat</property>
-        <property name="climb_rate">0.01</property>
-        <property name="digits">2</property>
-        <property name="numeric">True</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">1</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkSpinButton" id="spinbutton_longitude">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="halign">end</property>
-        <property name="valign">start</property>
-        <property name="width_chars">6</property>
-        <property name="input_purpose">number</property>
-        <property name="adjustment">adjustment_long</property>
-        <property name="climb_rate">0.01</property>
-        <property name="digits">2</property>
-        <property name="numeric">True</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">0</property>
+        <property name="top_attach">7</property>
       </packing>
     </child>
     <child>
@@ -173,7 +132,7 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">6</property>
+        <property name="top_attach">9</property>
       </packing>
     </child>
     <child>
@@ -185,7 +144,7 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">6</property>
+        <property name="top_attach">9</property>
       </packing>
     </child>
     <child>
@@ -199,49 +158,7 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">9</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkEntry" id="textentry_openweathermap_api_key">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="valign">start</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">8</property>
-        <property name="width">2</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">start</property>
-        <property name="label" translatable="yes">OpenWeatherMap
-API Key</property>
-        <property name="xalign">0</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">7</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLinkButton">
-        <property name="label" translatable="yes">Get API Key</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">True</property>
-        <property name="halign">end</property>
-        <property name="valign">start</property>
-        <property name="relief">half</property>
-        <property name="uri">http://openweathermap.org/appid</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">7</property>
+        <property name="top_attach">12</property>
       </packing>
     </child>
     <child>
@@ -254,7 +171,7 @@ API Key</property>
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">2</property>
+        <property name="top_attach">5</property>
       </packing>
     </child>
     <child>
@@ -268,7 +185,7 @@ API Key</property>
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">2</property>
+        <property name="top_attach">5</property>
       </packing>
     </child>
     <child>
@@ -280,7 +197,7 @@ API Key</property>
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">3</property>
+        <property name="top_attach">6</property>
       </packing>
     </child>
     <child>
@@ -302,8 +219,234 @@ API Key</property>
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">3</property>
+        <property name="top_attach">6</property>
       </packing>
+    </child>
+    <child>
+      <object class="GtkNotebook" id="notebook_providers">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="show_tabs">False</property>
+        <property name="show_border">False</property>
+        <child>
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="no_show_all">True</property>
+            <property name="column_homogeneous">True</property>
+            <child>
+              <object class="GtkEntry" id="entry_location">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="completion">entrycompletion1</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Location</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child type="tab">
+          <placeholder/>
+        </child>
+        <child>
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="no_show_all">True</property>
+            <property name="margin_top">8</property>
+            <property name="margin_bottom">8</property>
+            <property name="row_spacing">8</property>
+            <property name="column_homogeneous">True</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Longitude</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Latitude</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinbutton_longitude">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="width_chars">6</property>
+                <property name="text" translatable="yes">0.00</property>
+                <property name="input_purpose">number</property>
+                <property name="adjustment">adjustment_long</property>
+                <property name="climb_rate">0.01</property>
+                <property name="digits">2</property>
+                <property name="numeric">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinbutton_latitude">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="width_chars">6</property>
+                <property name="text" translatable="yes">0.00</property>
+                <property name="input_purpose">number</property>
+                <property name="adjustment">adjustment_lat</property>
+                <property name="climb_rate">0.01</property>
+                <property name="digits">2</property>
+                <property name="numeric">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">OpenWeatherMap
+API Key</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="label" translatable="yes">Get API Key</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="uri">http://openweathermap.org/appid</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="textentry_openweathermap_api_key">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="valign">start</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">3</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child type="tab">
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child type="tab">
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">1</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkComboBox" id="combobox_provider">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="model">liststore_providers</property>
+        <property name="has_entry">True</property>
+        <property name="entry_text_column">1</property>
+        <property name="id_column">0</property>
+        <child internal-child="entry">
+          <object class="GtkEntry">
+            <property name="can_focus">False</property>
+            <property name="placeholder_text" translatable="yes">Weather Provider</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">0</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
     </child>
     <child>
       <placeholder/>

@@ -181,7 +181,16 @@ public class AppletSettings : Gtk.Grid
     private Gtk.ComboBox? combobox_units_format;
 
     [GtkChild]
+    private Gtk.ComboBox? combobox_provider;
+
+    [GtkChild]
+    private Gtk.Notebook? notebook_providers;
+
+    [GtkChild]
     private Gtk.Entry? textentry_openweathermap_api_key;
+
+    [GtkChild]
+    private Gtk.Entry? entry_location;
 
     public AppletSettings(Settings? settings)
     {
@@ -195,12 +204,30 @@ public class AppletSettings : Gtk.Grid
         this.settings.bind("show-city-name", switch_city_name, "active", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-temp", switch_temp, "active", SettingsBindFlags.DEFAULT);
         this.settings.bind("units-format", combobox_units_format, "active_id", SettingsBindFlags.DEFAULT);
+        this.settings.bind("provider-id", combobox_provider, "active", SettingsBindFlags.DEFAULT);
 
         this.button_update_now.clicked.connect (() => {
             this.settings.set_boolean("update-now", true);
             this.settings.set_boolean("update-now", false);
         });
 
+        this.combobox_provider.changed.connect (() => {
+            resize_notebook_providers();
+        });
+        this.hide_all_notebook_providers_pages();
+        this.resize_notebook_providers();
+    }
+
+    void resize_notebook_providers(){
+        hide_all_notebook_providers_pages();
+        this.notebook_providers.set_current_page(this.combobox_provider.active);
+        this.notebook_providers.get_nth_page(this.combobox_provider.active).show();
+    }
+
+    void hide_all_notebook_providers_pages(){
+        for (int page_id = 0; page_id < this.notebook_providers.get_n_pages(); page_id++) {
+            this.notebook_providers.get_nth_page(page_id).hide();
+        }
     }
 }
 
