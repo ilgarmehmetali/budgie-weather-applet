@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
+
+  <schema id="net.milgar.budgie-weather.gweather">
+    <key type="d" name="longitude">
+      <default>0</default>
+      <summary>Longitude</summary>
+      <description>Longitude</description>
+    </key>
+    <key type="d" name="latitude">
+      <default>0</default>
+      <summary>Latitude</summary>
+      <description>Latitude</description>
+    </key>
+    <key type="s" name="city-name">
+      <default>""</default>
+      <summary>City name</summary>
+      <description>City name</description>
+    </key>
+  </schema>
+
   <schema id="net.milgar.budgie-weather">
     <key type="d" name="longitude">
       <default>0</default>

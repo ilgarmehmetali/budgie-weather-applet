@@ -158,6 +158,7 @@ public class Applet : Budgie.Applet
 public class AppletSettings : Gtk.Grid
 {
     Settings? settings = null;
+    Settings? gweather_settings = null;
 
     [GtkChild]
     private Gtk.SpinButton? spinbutton_longitude;
@@ -222,6 +223,13 @@ public class AppletSettings : Gtk.Grid
 
 
         this.gweather_location_entry.changed.connect (this.location_entry_changed);
+
+        this.gweather_settings = new Settings.with_path("net.milgar.budgie-weather.gweather", this.settings.path + "gweather/");
+        var city_name = this.gweather_settings.get_string("city-name");
+        var latitude = this.gweather_settings.get_double("latitude");
+        var longitude = this.gweather_settings.get_double("longitude");
+        if (city_name != "")
+            this.gweather_location_entry.set_location(new GWeather.Location.detached(city_name, null, latitude, longitude));
     }
 
     void resize_notebook_providers(){
@@ -237,6 +245,7 @@ public class AppletSettings : Gtk.Grid
     }
 
     void location_entry_changed(){
+        print("location_entry_changed");
         GWeather.Location? location = this.gweather_location_entry.get_location ();
         double latitude, longitude;
         string city_name;
@@ -244,15 +253,13 @@ public class AppletSettings : Gtk.Grid
         if (location != null) {
             location.get_coords(out latitude, out longitude);
             city_name = location.get_city_name ();
-            print ("City:%s, lat:%f, long:%f".printf(city_name, latitude, longitude));
-            GWeather.Location? location_test = new GWeather.Location.detached (city_name, null, latitude,longitude);
-            location_test.get_coords(out latitude, out longitude);
-            city_name = location_test.get_city_name ();
-            print ("City:%s, lat:%f, long:%f, metar:%s".printf(city_name, latitude, longitude,location_test.get_code()));
-
-
+            this.gweather_settings.set_string("city-name", city_name);
+            this.gweather_settings.set_double("latitude", latitude);
+            this.gweather_settings.set_double("longitude", longitude);
         } else {
-            //unkown location
+            this.gweather_settings.reset("city-name");
+            this.gweather_settings.reset("latitude");
+            this.gweather_settings.reset("longitude");
         }
     }
 }
