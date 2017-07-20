@@ -219,6 +219,9 @@ public class AppletSettings : Gtk.Grid
         });
         this.hide_all_notebook_providers_pages();
         this.resize_notebook_providers();
+
+
+        this.gweather_location_entry.changed.connect (this.location_entry_changed);
     }
 
     void resize_notebook_providers(){
@@ -232,6 +235,27 @@ public class AppletSettings : Gtk.Grid
             this.notebook_providers.get_nth_page(page_id).hide();
         }
     }
+
+    void location_entry_changed(){
+        GWeather.Location? location = this.gweather_location_entry.get_location ();
+        double latitude, longitude;
+        string city_name;
+
+        if (location != null) {
+            location.get_coords(out latitude, out longitude);
+            city_name = location.get_city_name ();
+            print ("City:%s, lat:%f, long:%f".printf(city_name, latitude, longitude));
+            GWeather.Location? location_test = new GWeather.Location.detached (city_name, null, latitude,longitude);
+            location_test.get_coords(out latitude, out longitude);
+            city_name = location_test.get_city_name ();
+            print ("City:%s, lat:%f, long:%f, metar:%s".printf(city_name, latitude, longitude,location_test.get_code()));
+
+
+        } else {
+            //unkown location
+        }
+    }
+}
 
 void print(string? message){
 	if (message == null) message = "";
