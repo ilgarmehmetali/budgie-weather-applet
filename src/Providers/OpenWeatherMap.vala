@@ -203,9 +203,4 @@ public class OpenWeatherMap {
 	}
 }
 
-void print(string? message){
-	if (message == null) message = "";
-	stdout.printf ("Budgie-Weather: %s\n", message);
-}
-
 }

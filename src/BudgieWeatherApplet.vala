@@ -232,6 +232,10 @@ public class AppletSettings : Gtk.Grid
             this.notebook_providers.get_nth_page(page_id).hide();
         }
     }
+
+void print(string? message){
+	if (message == null) message = "";
+	stdout.printf ("Budgie-Weather: %s\n", message);
 }
 
 }
