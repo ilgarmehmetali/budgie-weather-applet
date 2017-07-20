@@ -1,5 +1,5 @@
 
-namespace Weather {
+namespace WeatherApplet {
 
 public class Plugin : Budgie.Plugin, Peas.ExtensionBase
 {
@@ -276,5 +276,5 @@ public void peas_register_types(TypeModule module)
 {
     // boilerplate - all modules need this
     var objmodule = module as Peas.ObjectModule;
-    objmodule.register_extension_type(typeof(Budgie.Plugin), typeof(Weather.Plugin));
+    objmodule.register_extension_type(typeof(Budgie.Plugin), typeof(WeatherApplet.Plugin));
 }

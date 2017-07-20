@@ -1,4 +1,4 @@
-namespace Weather {
+namespace WeatherApplet {
 
 public class WeatherInfo : Object {
 

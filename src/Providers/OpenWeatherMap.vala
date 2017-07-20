@@ -1,5 +1,5 @@
 
-namespace Weather.Providers {
+namespace WeatherApplet.Providers {
 
 public class OpenWeatherMap {
 

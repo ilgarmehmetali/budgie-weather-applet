@@ -61,7 +61,7 @@
       </row>
     </data>
   </object>
-  <template class="WeatherAppletSettings" parent="GtkGrid">
+  <template class="WeatherAppletAppletSettings" parent="GtkGrid">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="margin_left">8</property>
