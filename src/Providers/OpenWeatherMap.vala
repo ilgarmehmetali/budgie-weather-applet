@@ -86,8 +86,8 @@ public class OpenWeatherMap {
 		}
     }
 
-    public static WeatherInfo? get_current_weather_info_with_geo_data (double latitude, double longitude, string apikey, string unit) {
-    	Soup.Session session = new Soup.Session ();
+    public static void get_current_weather_info_with_geo_data (double latitude, double longitude, string apikey, string unit, WeatherUpdated callback) {
+		Soup.Session session = new Soup.Session ();
     	session.use_thread_context = true;
 
 		WeatherInfo info = null;
@@ -100,11 +100,15 @@ public class OpenWeatherMap {
 			InputStream stream = request.send ();
 
 			Providers.OpenWeatherMap openWeatherMap = new Providers.OpenWeatherMap.from_json_stream(stream);
+            if (unit == "metric") openWeatherMap.symbol = "C";
+            else if (unit == "imperial") openWeatherMap.symbol = "F";
+            else if (unit == "standard") openWeatherMap.symbol = "K";
+
 			info = openWeatherMap.get_weather_info();
+			callback(info);
 		} catch (Error e) {
 			print ("Error while connecting to openweathermap: %s".printf(e.message));
 		}
-		return info;
     }
 
 	void parse_json(Json.Parser parser){

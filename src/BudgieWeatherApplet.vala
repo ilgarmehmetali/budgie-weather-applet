@@ -68,32 +68,32 @@ public class Applet : Budgie.Applet
         if(last_update.compare(now) <= 0) {
             this.settings.set_int64("last-update", now.to_unix());
 
-            new Thread<int> ("thread_update", () => {
-                double latitude = this.settings.get_double("latitude");
-                double longitude = this.settings.get_double("longitude");
-                string apikey = this.settings.get_string("openweathermap-api-key");
-                string unit = this.settings.get_string("units-format");
+            double latitude = this.settings.get_double("latitude");
+            double longitude = this.settings.get_double("longitude");
+            string apikey = this.settings.get_string("openweathermap-api-key");
+            string unit = this.settings.get_string("units-format");
 
-                WeatherInfo? info = Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit);
-                if( info != null){
-                    this.city_name.label = info.city_name;
-
-                    string symbol = "";
-                    if (unit == "metric") symbol = "C";
-                    else if (unit == "imperial") symbol = "F";
-                    else if (unit == "standard") symbol = "K";
-                    this.temp.label = "%s°%s".printf(info.temp.to_string(), symbol);
-
-                    this.weather_icon.set_from_icon_name(info.symbolic_icon_name, Gtk.IconSize.LARGE_TOOLBAR);
-                } else {
-                    this.city_name.label = " - ";
-                    this.temp.label = " - ";
-                    this.weather_icon.clear();
-                }
-                return 0;
-            });
+		    new Thread<int>("", () => {
+                //if openweathermap is provider
+                Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit, update_gui_with_weather_info);
+    			return 0;
+    		});
         }
         return true;
+    }
+
+    void update_gui_with_weather_info (WeatherInfo? info){
+        if( info != null){
+            this.city_name.label = info.city_name;
+
+            this.temp.label = "%.1f°%s".printf(info.temp, info.symbol);
+
+            this.weather_icon.set_from_icon_name(info.symbolic_icon_name, Gtk.IconSize.LARGE_TOOLBAR);
+        } else {
+            this.city_name.label = " - ";
+            this.temp.label = " - ";
+            this.weather_icon.clear();
+        }
     }
 
     void on_settings_change(string key) {
