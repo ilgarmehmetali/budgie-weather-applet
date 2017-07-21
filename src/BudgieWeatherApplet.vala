@@ -19,11 +19,7 @@ public class Applet : Budgie.Applet
 
     private uint source_id;
 
-    private static string OPEN_WEATHER_MAP_URL = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&apikey=%s&units=%s";
-
     private Settings? settings;
-
-    private Soup.Session session;
 
     public Applet(string uuid)
     {
@@ -52,10 +48,6 @@ public class Applet : Budgie.Applet
         box.pack_start (this.city_name, false, false, 0);
         this.add (box);
 
-    	// Create a session:
-    	session = new Soup.Session ();
-    	session.use_thread_context = true;
-
         this.reset_update_timer(true);
 
         this.on_settings_change("show-icon");
@@ -76,40 +68,30 @@ public class Applet : Budgie.Applet
         if(last_update.compare(now) <= 0) {
             this.settings.set_int64("last-update", now.to_unix());
 
-            double latitude = this.settings.get_double("latitude");
-            double longitude = this.settings.get_double("longitude");
-            string apikey = this.settings.get_string("openweathermap-api-key");
-            string unit = this.settings.get_string("units-format");
+            new Thread<int> ("thread_update", () => {
+                double latitude = this.settings.get_double("latitude");
+                double longitude = this.settings.get_double("longitude");
+                string apikey = this.settings.get_string("openweathermap-api-key");
+                string unit = this.settings.get_string("units-format");
 
-            try {
-                string request_url = OPEN_WEATHER_MAP_URL.printf(latitude, longitude, apikey, unit);
-                Soup.Request request = session.request (request_url);
-                request.send_async.begin (null, (obj, res) => {
-                    try {
-                        InputStream stream = request.send_async.end (res);
-                        Providers.OpenWeatherMap openWeatherMap = new Providers.OpenWeatherMap.from_json_stream(stream);
-                        WeatherInfo info = openWeatherMap.get_weather_info();
+                WeatherInfo? info = Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit);
+                if( info != null){
+                    this.city_name.label = info.city_name;
 
-                        if(openWeatherMap.cod == "200") {
-                            this.city_name.label = info.city_name;
+                    string symbol = "";
+                    if (unit == "metric") symbol = "C";
+                    else if (unit == "imperial") symbol = "F";
+                    else if (unit == "standard") symbol = "K";
+                    this.temp.label = "%s°%s".printf(info.temp.to_string(), symbol);
 
-                            string symbol = "";
-                            if (unit == "metric") symbol = "C";
-                            else if (unit == "imperial") symbol = "F";
-                            else if (unit == "standard") symbol = "K";
-                            this.temp.label = "%s°%s".printf(info.temp.to_string(), symbol);
-
-                            this.weather_icon.set_from_icon_name(info.symbolic_icon_name, Gtk.IconSize.LARGE_TOOLBAR);
-                        } else {
-                            openWeatherMap.printJson();
-                        }
-                    } catch (Error e) {
-                        print ("Error at update func: %s".printf(e.message));
-                    }
-                });
-            } catch (Error e) {
-                print ("Error at update func: %s".printf(e.message));
-            }
+                    this.weather_icon.set_from_icon_name(info.symbolic_icon_name, Gtk.IconSize.LARGE_TOOLBAR);
+                } else {
+                    this.city_name.label = " - ";
+                    this.temp.label = " - ";
+                    this.weather_icon.clear();
+                }
+                return 0;
+            });
         }
         return true;
     }

@@ -85,6 +85,27 @@ public class OpenWeatherMap {
 		}
     }
 
+    public static WeatherInfo? get_current_weather_info_with_geo_data (double latitude, double longitude, string apikey, string unit) {
+    	Soup.Session session = new Soup.Session ();
+    	session.use_thread_context = true;
+
+		WeatherInfo info = null;
+
+		try {
+			string url = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&apikey=%s&units=%s";
+			string request_url = url.printf(latitude, longitude, apikey, unit);
+
+			Soup.Request request = session.request (request_url);
+			InputStream stream = request.send ();
+
+			Providers.OpenWeatherMap openWeatherMap = new Providers.OpenWeatherMap.from_json_stream(stream);
+			info = openWeatherMap.get_weather_info();
+		} catch (Error e) {
+			print ("Error while connecting to openweathermap: %s".printf(e.message));
+		}
+		return info;
+    }
+
 	void parse_json(Json.Parser parser){
 		Json.Node node = parser.get_root ();
 		Json.Object root_obj = node.get_object();
