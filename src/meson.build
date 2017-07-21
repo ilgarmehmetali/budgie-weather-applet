@@ -21,6 +21,7 @@ applet_budgie_weather_resources = gnome.compile_resources(
 applet_budgie_weather_sources = [
     'BudgieWeatherApplet.vala',
     'Providers/OpenWeatherMap.vala',
+    'Providers/LibGWeather.vala',
     'Providers/Common.vala',
     'WeatherInfo.vala',
     applet_budgie_weather_resources,
