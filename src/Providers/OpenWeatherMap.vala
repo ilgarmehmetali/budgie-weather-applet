@@ -61,6 +61,7 @@ public class OpenWeatherMap {
 	public string name {get;set;}
 	public string cod {get;set;}
 	public string message {get;set;}
+	public string symbol {get;set;}
 
 	private string json_string;
 
@@ -176,6 +177,7 @@ public class OpenWeatherMap {
 		info.temp = this.main.temp;
 		info.temp_min = this.main.temp_min;
 		info.temp_max = this.main.temp_max;
+		info.symbol = this.symbol;
 		return info;
 	}
 

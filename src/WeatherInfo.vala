@@ -7,7 +7,7 @@ public class WeatherInfo : Object {
     public float temp {get;set;}
     public float temp_min {get;set;}
     public float temp_max {get;set;}
-
+    public string symbol {get;set;}
 }
 
 }
