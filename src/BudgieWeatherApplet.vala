@@ -67,6 +67,7 @@ public class Applet : Budgie.Applet
 
         if(last_update.compare(now) <= 0) {
             this.settings.set_int64("last-update", now.to_unix());
+            Providers.ProvidersEnum provider = (Providers.ProvidersEnum)this.settings.get_int("provider-id");
 
             double latitude = this.settings.get_double("latitude");
             double longitude = this.settings.get_double("longitude");
@@ -74,7 +75,11 @@ public class Applet : Budgie.Applet
             string unit = this.settings.get_string("units-format");
 
 		    new Thread<int>("", () => {
-                //if openweathermap is provider
+                if(provider == Providers.ProvidersEnum.GWEATHER){
+                    print("GWEATHER");
+                } else if(provider == Providers.ProvidersEnum.OPEN_WEATHER_MAP) {
+                    print("OPEN_WEATHER_MAP");
+                }
                 Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit, update_gui_with_weather_info);
     			return 0;
     		});
