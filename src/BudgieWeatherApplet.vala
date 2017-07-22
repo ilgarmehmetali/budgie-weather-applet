@@ -69,18 +69,23 @@ public class Applet : Budgie.Applet
             this.settings.set_int64("last-update", now.to_unix());
             Providers.ProvidersEnum provider = (Providers.ProvidersEnum)this.settings.get_int("provider-id");
 
-            double latitude = this.settings.get_double("latitude");
-            double longitude = this.settings.get_double("longitude");
-            string apikey = this.settings.get_string("openweathermap-api-key");
-            string unit = this.settings.get_string("units-format");
 
 		    new Thread<int>("", () => {
                 if(provider == Providers.ProvidersEnum.GWEATHER){
+                    Settings gweather_settings = new Settings.with_path("net.milgar.budgie-weather.gweather", this.settings.path + "gweather/");
+                    string city_name = gweather_settings.get_string("city-name");
+                    float latitude = (float)gweather_settings.get_double("latitude");
+                    float longitude = (float)gweather_settings.get_double("longitude");
+                    Providers.LibGWeather.get_current_weather_info(latitude, longitude, city_name, update_gui_with_weather_info);
                     print("GWEATHER");
                 } else if(provider == Providers.ProvidersEnum.OPEN_WEATHER_MAP) {
+                    double latitude = this.settings.get_double("latitude");
+                    double longitude = this.settings.get_double("longitude");
+                    string apikey = this.settings.get_string("openweathermap-api-key");
+                    string unit = this.settings.get_string("units-format");
+                    Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit, update_gui_with_weather_info);
                     print("OPEN_WEATHER_MAP");
                 }
-                Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit, update_gui_with_weather_info);
     			return 0;
     		});
         }
