@@ -81,7 +81,7 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">7</property>
+        <property name="top_attach">3</property>
       </packing>
     </child>
     <child>
@@ -95,7 +95,7 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">8</property>
+        <property name="top_attach">4</property>
       </packing>
     </child>
     <child>
@@ -107,7 +107,7 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">8</property>
+        <property name="top_attach">4</property>
       </packing>
     </child>
     <child>
@@ -119,7 +119,7 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">7</property>
+        <property name="top_attach">3</property>
       </packing>
     </child>
     <child>
@@ -133,7 +133,7 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">9</property>
+        <property name="top_attach">5</property>
       </packing>
     </child>
     <child>
@@ -145,7 +145,7 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">9</property>
+        <property name="top_attach">5</property>
       </packing>
     </child>
     <child>
@@ -156,67 +156,6 @@
         <property name="receives_default">True</property>
         <property name="halign">end</property>
         <property name="valign">end</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">12</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Update Interval
-(minutes)</property>
-        <property name="xalign">0</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">5</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkSpinButton" id="spinbutton_update_interval">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="halign">end</property>
-        <property name="valign">start</property>
-        <property name="width_chars">6</property>
-        <property name="adjustment">adjustment_interval</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">5</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Units format</property>
-        <property name="xalign">0</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">6</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkComboBox" id="combobox_units_format">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="model">liststore1</property>
-        <property name="has_entry">True</property>
-        <property name="entry_text_column">1</property>
-        <property name="id_column">0</property>
-        <child internal-child="entry">
-          <object class="GtkEntry">
-            <property name="can_focus">False</property>
-            <property name="halign">end</property>
-            <property name="valign">start</property>
-            <property name="width_chars">10</property>
-          </object>
-        </child>
       </object>
       <packing>
         <property name="left_attach">1</property>
@@ -261,12 +200,6 @@
                 <property name="top_attach">1</property>
                 <property name="width">2</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
         </child>
@@ -355,7 +288,7 @@ API Key</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
+                <property name="top_attach">3</property>
               </packing>
             </child>
             <child>
@@ -370,7 +303,7 @@ API Key</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
+                <property name="top_attach">3</property>
               </packing>
             </child>
             <child>
@@ -381,8 +314,42 @@ API Key</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">3</property>
+                <property name="top_attach">4</property>
                 <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Units format</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="combobox_units_format">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="model">liststore1</property>
+                <property name="has_entry">True</property>
+                <property name="entry_text_column">1</property>
+                <property name="id_column">0</property>
+                <child internal-child="entry">
+                  <object class="GtkEntry">
+                    <property name="can_focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="width_chars">10</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
               </packing>
             </child>
           </object>
@@ -428,34 +395,31 @@ API Key</property>
       </packing>
     </child>
     <child>
-      <placeholder/>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Update Interval
+(minutes)</property>
+        <property name="xalign">0</property>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">2</property>
+      </packing>
     </child>
     <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
+      <object class="GtkSpinButton" id="spinbutton_update_interval">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="halign">end</property>
+        <property name="valign">start</property>
+        <property name="width_chars">6</property>
+        <property name="adjustment">adjustment_interval</property>
+      </object>
+      <packing>
+        <property name="left_attach">1</property>
+        <property name="top_attach">2</property>
+      </packing>
     </child>
     <child>
       <placeholder/>
