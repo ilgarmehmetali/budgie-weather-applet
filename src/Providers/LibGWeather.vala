@@ -11,9 +11,9 @@ public class LibGWeather {
             WeatherInfo info = new WeatherInfo();
             info.city_name = gweather_info.get_location_name();
             info.symbolic_icon_name = gweather_info.get_symbolic_icon_name();
-            info.temp = (float)gweather_info.get_temp().to_double();
-            info.temp_min = (float)gweather_info.get_temp_min().to_double();
-            info.temp_max = (float)gweather_info.get_temp_max().to_double();
+            info.temp = (float)double.parse(gweather_info.get_temp());
+            info.temp_min = (float)double.parse(gweather_info.get_temp_min());
+            info.temp_max = (float)double.parse(gweather_info.get_temp_max());
             callback(info);
         });
     }
