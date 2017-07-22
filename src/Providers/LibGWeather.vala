@@ -14,6 +14,7 @@ public class LibGWeather {
             info.temp = (float)double.parse(gweather_info.get_temp());
             info.temp_min = (float)double.parse(gweather_info.get_temp_min());
             info.temp_max = (float)double.parse(gweather_info.get_temp_max());
+            info.symbol = "";
             callback(info);
         });
     }
