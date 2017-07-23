@@ -21,6 +21,8 @@ public class Applet : Budgie.Applet
 
     private Settings? settings;
 
+    private ILogindManager? logind_manager;
+
     public Applet(string uuid)
     {
         Object(uuid: uuid);
@@ -58,6 +60,19 @@ public class Applet : Budgie.Applet
 
         // to solve template giving "Invalid object type 'GWeatherLocationEntry'" error"
         new GWeather.LocationEntry(null);
+
+        try {
+            logind_manager = Bus.get_proxy_sync (BusType.SYSTEM, LOGIND_BUS_NAME, LOGIND_BUS_PATH);
+            if(logind_manager != null){
+                logind_manager.prepare_for_sleep.connect((start) => {
+                    if(!start){
+                        this.reset_update_timer(true);
+                    }
+                });
+            }
+        } catch (IOError e) {
+            print(e.message);
+        }
     }
 
     bool update(){

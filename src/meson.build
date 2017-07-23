@@ -24,6 +24,7 @@ applet_budgie_weather_sources = [
     'Providers/LibGWeather.vala',
     'Providers/Common.vala',
     'WeatherInfo.vala',
+    'ILogindManager.vala',
     applet_budgie_weather_resources,
 ]
 
