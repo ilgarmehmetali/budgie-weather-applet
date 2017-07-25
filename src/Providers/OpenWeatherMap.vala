@@ -174,16 +174,21 @@ public class OpenWeatherMap {
 		this.json_string = generator.to_data (null);
 	}
 
-	public WeatherInfo get_weather_info(){
-		WeatherInfo info = new WeatherInfo();
-		info.city_name = this.name;
-		info.symbolic_icon_name = openweatermapIconToLinuxIcon(this.weather.icon);
-		info.temp = this.main.temp;
-		info.temp_min = this.main.temp_min;
-		info.temp_max = this.main.temp_max;
-		info.symbol = this.symbol;
-		return info;
-	}
+    public WeatherInfo? get_weather_info(){
+        WeatherInfo info = null;
+        if(this.cod == "200"){
+            info = new WeatherInfo();
+            info.city_name = this.name;
+            info.symbolic_icon_name = openweatermapIconToLinuxIcon(this.weather.icon);
+            info.temp = this.main.temp;
+            info.temp_min = this.main.temp_min;
+            info.temp_max = this.main.temp_max;
+            info.symbol = this.symbol;
+        } else {
+            WeatherApplet.print(this.message);
+        }
+        return info;
+    }
 
 	public void printJson(){
 		print("OpenWeatherMapDTO Json data;");
