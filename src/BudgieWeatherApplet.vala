@@ -89,7 +89,7 @@ public class Applet : Budgie.Applet
             Providers.ProvidersEnum provider = (Providers.ProvidersEnum)this.settings.get_int("provider-id");
 
 
-		    new Thread<int>("", () => {
+            new Thread<int>("", () => {
                 if(provider == Providers.ProvidersEnum.GWEATHER){
                     string city_name = this.gweather_settings.get_string("city-name");
                     float latitude = (float)this.gweather_settings.get_double("latitude");
@@ -104,8 +104,8 @@ public class Applet : Budgie.Applet
                     Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit, update_gui_with_weather_info);
                     print("OPEN_WEATHER_MAP");
                 }
-    			return 0;
-    		});
+                return 0;
+            });
         }
         return true;
     }
@@ -287,8 +287,8 @@ public class AppletSettings : Gtk.Grid
 }
 
 void print(string? message){
-	if (message == null) message = "";
-	stdout.printf ("Budgie-Weather: %s\n", message);
+    if (message == null) message = "";
+    stdout.printf ("Budgie-Weather: %s\n", message);
 }
 
 }
