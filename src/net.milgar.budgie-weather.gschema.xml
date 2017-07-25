@@ -19,7 +19,7 @@
     </key>
   </schema>
 
-  <schema id="net.milgar.budgie-weather">
+  <schema id="net.milgar.budgie-weather.openweathermap">
     <key type="d" name="longitude">
       <default>0</default>
       <summary>Longitude</summary>
@@ -35,6 +35,14 @@
       <summary>OpenWeatherMap API Key</summary>
       <description>OpenWeatherMap API Key</description>
     </key>
+    <key type="s" name="units-format">
+      <default>"metric"</default>
+      <summary>Temperature units format</summary>
+      <description>Temperature units format</description>
+    </key>
+  </schema>
+
+  <schema id="net.milgar.budgie-weather">
     <key type="b" name="show-icon">
       <default>true</default>
       <summary>Show Icon</summary>
@@ -65,15 +73,12 @@
       <summary>Last Update Timestamp</summary>
       <description>Timestamp for last update</description>
     </key>
-    <key type="s" name="units-format">
-      <default>"metric"</default>
-      <summary>Temperature units format</summary>
-      <description>Temperature units format</description>
-    </key>
     <key type="i" name="provider-id">
       <default>0</default>
       <summary>Weather provider</summary>
       <description>Weather providers, 0 is libgweather, 1 is openweathermap</description>
     </key>
+    <child name="gweather" schema="net.milgar.budgie-weather.gweather"/>
+    <child name="openweathermap" schema="net.milgar.budgie-weather.openweathermap"/>
   </schema>
 </schemalist>

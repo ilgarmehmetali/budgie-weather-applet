@@ -20,6 +20,8 @@ public class Applet : Budgie.Applet
     private uint source_id;
 
     private Settings? settings;
+    private Settings? gweather_settings;
+    private Settings? openweathermap_settings;
 
     private ILogindManager? logind_manager;
 
@@ -32,6 +34,8 @@ public class Applet : Budgie.Applet
 
         this.settings = this.get_applet_settings(uuid);
         this.settings.changed.connect(on_settings_change);
+        this.gweather_settings = this.settings.get_child("gweather");
+        this.openweathermap_settings = this.settings.get_child("openweathermap");
 
         this.weather_icon = new Gtk.Image ();
 
@@ -87,17 +91,16 @@ public class Applet : Budgie.Applet
 
 		    new Thread<int>("", () => {
                 if(provider == Providers.ProvidersEnum.GWEATHER){
-                    Settings gweather_settings = new Settings.with_path("net.milgar.budgie-weather.gweather", this.settings.path + "gweather/");
-                    string city_name = gweather_settings.get_string("city-name");
-                    float latitude = (float)gweather_settings.get_double("latitude");
-                    float longitude = (float)gweather_settings.get_double("longitude");
+                    string city_name = this.gweather_settings.get_string("city-name");
+                    float latitude = (float)this.gweather_settings.get_double("latitude");
+                    float longitude = (float)this.gweather_settings.get_double("longitude");
                     Providers.LibGWeather.get_current_weather_info(latitude, longitude, city_name, update_gui_with_weather_info);
                     print("GWEATHER");
                 } else if(provider == Providers.ProvidersEnum.OPEN_WEATHER_MAP) {
-                    double latitude = this.settings.get_double("latitude");
-                    double longitude = this.settings.get_double("longitude");
-                    string apikey = this.settings.get_string("openweathermap-api-key");
-                    string unit = this.settings.get_string("units-format");
+                    double latitude = this.openweathermap_settings.get_double("latitude");
+                    double longitude = this.openweathermap_settings.get_double("longitude");
+                    string apikey = this.openweathermap_settings.get_string("openweathermap-api-key");
+                    string unit = this.openweathermap_settings.get_string("units-format");
                     Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit, update_gui_with_weather_info);
                     print("OPEN_WEATHER_MAP");
                 }
@@ -166,6 +169,7 @@ public class AppletSettings : Gtk.Grid
 {
     Settings? settings = null;
     Settings? gweather_settings = null;
+    Settings? openweathermap_settings = null;
 
     [GtkChild]
     private Gtk.SpinButton? spinbutton_longitude;
@@ -206,15 +210,37 @@ public class AppletSettings : Gtk.Grid
     public AppletSettings(Settings? settings)
     {
         this.settings = settings;
+        this.gweather_settings = this.settings.get_child("gweather");
+        this.openweathermap_settings = this.settings.get_child("openweathermap");
 
-        this.settings.bind("longitude", spinbutton_longitude, "value", SettingsBindFlags.DEFAULT);
-        this.settings.bind("latitude", spinbutton_latitude, "value", SettingsBindFlags.DEFAULT);
+        this.init_generic_settings();
+        this.init_openweathermap_settings();
+        this.init_gweather_settings();
+    }
+
+    void init_openweathermap_settings(){
+        this.openweathermap_settings.bind("longitude", spinbutton_longitude, "value", SettingsBindFlags.DEFAULT);
+        this.openweathermap_settings.bind("latitude", spinbutton_latitude, "value", SettingsBindFlags.DEFAULT);
+        this.openweathermap_settings.bind("openweathermap-api-key", textentry_openweathermap_api_key, "text", SettingsBindFlags.DEFAULT);
+        this.openweathermap_settings.bind("units-format", combobox_units_format, "active_id", SettingsBindFlags.DEFAULT);
+    }
+
+    void init_gweather_settings(){
+        this.gweather_location_entry.changed.connect (this.location_entry_changed);
+
+        var city_name = this.gweather_settings.get_string("city-name");
+        var latitude = this.gweather_settings.get_double("latitude");
+        var longitude = this.gweather_settings.get_double("longitude");
+        if (city_name != "") {
+            this.gweather_location_entry.set_location(new GWeather.Location.detached(city_name, null, latitude, longitude));
+        }
+    }
+
+    void init_generic_settings(){
         this.settings.bind("update-interval", spinbutton_update_interval, "value", SettingsBindFlags.DEFAULT);
-        this.settings.bind("openweathermap-api-key", textentry_openweathermap_api_key, "text", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-icon", switch_icon, "active", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-city-name", switch_city_name, "active", SettingsBindFlags.DEFAULT);
         this.settings.bind("show-temp", switch_temp, "active", SettingsBindFlags.DEFAULT);
-        this.settings.bind("units-format", combobox_units_format, "active_id", SettingsBindFlags.DEFAULT);
         this.settings.bind("provider-id", combobox_provider, "active", SettingsBindFlags.DEFAULT);
 
         this.button_update_now.clicked.connect (() => {
@@ -227,16 +253,6 @@ public class AppletSettings : Gtk.Grid
         });
         this.hide_all_notebook_providers_pages();
         this.resize_notebook_providers();
-
-
-        this.gweather_location_entry.changed.connect (this.location_entry_changed);
-
-        this.gweather_settings = new Settings.with_path("net.milgar.budgie-weather.gweather", this.settings.path + "gweather/");
-        var city_name = this.gweather_settings.get_string("city-name");
-        var latitude = this.gweather_settings.get_double("latitude");
-        var longitude = this.gweather_settings.get_double("longitude");
-        if (city_name != "")
-            this.gweather_location_entry.set_location(new GWeather.Location.detached(city_name, null, latitude, longitude));
     }
 
     void resize_notebook_providers(){
@@ -252,7 +268,6 @@ public class AppletSettings : Gtk.Grid
     }
 
     void location_entry_changed(){
-        print("location_entry_changed");
         GWeather.Location? location = this.gweather_location_entry.get_location ();
         double latitude, longitude;
         string city_name;
