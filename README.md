@@ -1,6 +1,14 @@
 # Budgie Weather
 A weather applet for Budgie Desktop. OpenWeatherMap is used for getting weather data.  
 
+![Screenshot](screenshot-1.jpg)  
+
+### Gweather Settings
+![Screenshot](screenshot-2.jpg)  
+
+### OpenWeatherMap Settings
+![Screenshot](screenshot-3.jpg)  
+
 ---
 
 ## Dependencies
