@@ -95,14 +95,12 @@ public class Applet : Budgie.Applet
                     float latitude = (float)this.gweather_settings.get_double("latitude");
                     float longitude = (float)this.gweather_settings.get_double("longitude");
                     Providers.LibGWeather.get_current_weather_info(latitude, longitude, city_name, update_gui_with_weather_info);
-                    print("GWEATHER");
                 } else if(provider == Providers.ProvidersEnum.OPEN_WEATHER_MAP) {
                     double latitude = this.openweathermap_settings.get_double("latitude");
                     double longitude = this.openweathermap_settings.get_double("longitude");
                     string apikey = this.openweathermap_settings.get_string("openweathermap-api-key");
                     string unit = this.openweathermap_settings.get_string("units-format");
                     Providers.OpenWeatherMap.get_current_weather_info_with_geo_data(latitude, longitude, apikey, unit, update_gui_with_weather_info);
-                    print("OPEN_WEATHER_MAP");
                 }
                 return 0;
             });
