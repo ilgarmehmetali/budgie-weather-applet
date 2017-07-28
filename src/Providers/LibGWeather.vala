@@ -13,7 +13,7 @@ public class LibGWeather {
         gweather_info.update();
     }
 
-    private WeatherInfo get_weather_info_from_gweather_info (GWeather.Info gweather_info) {
+    private static WeatherInfo get_weather_info_from_gweather_info (GWeather.Info gweather_info) {
         WeatherInfo info = new WeatherInfo();
         info.city_name = gweather_info.get_location_name();
         info.symbolic_icon_name = gweather_info.get_symbolic_icon_name();
