@@ -8,7 +8,13 @@ public class LibGWeather {
         GWeather.Info gweather_info = new GWeather.Info(loc, GWeather.ForecastType.STATE);
         gweather_info.updated.connect(()=>{
             WeatherInfo info = get_weather_info_from_gweather_info(gweather_info);
-            callback(info);
+            long update_time;
+            gweather_info.get_value_update(out update_time);
+            if(update_time == 0){
+                callback(null);
+            } else {
+                callback(info);
+            }
         });
         gweather_info.update();
     }
