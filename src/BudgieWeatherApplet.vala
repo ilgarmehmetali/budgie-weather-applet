@@ -70,7 +70,11 @@ public class Applet : Budgie.Applet
             if(logind_manager != null){
                 logind_manager.prepare_for_sleep.connect((start) => {
                     if(!start){
-                        this.reset_update_timer(true);
+                        new Thread<int>("", () => {
+                            Thread.usleep(10000000);
+                            this.reset_update_timer(true);
+                            return 0;
+                        });
                     }
                 });
             }
