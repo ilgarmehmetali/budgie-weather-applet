@@ -19,6 +19,9 @@ gtk+-3.0 >= 3.18
 glib-2.0
 libpeas-1.0 >= 1.8.0
 vala
+libsoup-2.4
+gweather-3.0
+json-glib-1.0
 systemd-logind (optional, to update weather data after waking from suspend)
 ```
 
