@@ -42,11 +42,11 @@ public class Applet : Budgie.Applet
         this.city_name = new Gtk.Label ("-");
         this.city_name.set_ellipsize (Pango.EllipsizeMode.END);
         this.city_name.set_alignment(0, 0.5f);
-        this.city_name.margin_left = this.city_name.margin_right = 6;
+        this.city_name.margin_start = this.city_name.margin_end = 6;
         this.temp = new Gtk.Label ("-");
         this.temp.set_ellipsize (Pango.EllipsizeMode.END);
         this.temp.set_alignment(0, 0.5f);
-        this.temp.margin_left = this.city_name.margin_right = 3;
+        this.temp.margin_start = this.city_name.margin_end = 3;
 
         Gtk.Box box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         box.pack_start (this.weather_icon, false, false, 0);
@@ -63,7 +63,7 @@ public class Applet : Budgie.Applet
         show_all();
 
         // to solve template giving "Invalid object type 'GWeatherLocationEntry'" error"
-        new GWeather.LocationEntry(null);
+        new GWeather.LocationEntry(GWeather.Location.get_world());
 
         try {
             logind_manager = Bus.get_proxy_sync (BusType.SYSTEM, LOGIND_BUS_NAME, LOGIND_BUS_PATH);
