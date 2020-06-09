@@ -1,3 +1,6 @@
+# ABANDONED
+If anyone wants to continue with development, please feel free to fork the project or let me know and i can add you as contributor
+
 # Budgie Weather
 A weather applet for Budgie Desktop. OpenWeatherMap is used for getting weather data.  
 
