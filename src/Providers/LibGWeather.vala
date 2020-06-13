@@ -3,9 +3,9 @@ namespace WeatherApplet.Providers {
 
 public class LibGWeather {
 
-    public static void get_current_weather_info (float latitude, float longitute, string city_name, WeatherUpdated callback) {
-        GWeather.Location loc = new GWeather.Location.detached(city_name, null, latitude, longitute);
-        GWeather.Info gweather_info = new GWeather.Info(loc, GWeather.ForecastType.STATE);
+    public static void get_current_weather_info (float latitude, float longitude, string city_name, WeatherUpdated callback) {
+        GWeather.Location loc = new GWeather.Location.detached(city_name, null, latitude, longitude);
+        GWeather.Info gweather_info = new GWeather.Info(loc);
         gweather_info.updated.connect(()=>{
             WeatherInfo info = get_weather_info_from_gweather_info(gweather_info);
             long update_time;
